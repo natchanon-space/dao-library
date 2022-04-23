@@ -1,0 +1,25 @@
+-- Schema for course enrollment database
+-- using SQLite data types.
+-- To create a database named "sample.db" with this schema use:
+-- sqlite3 library.db < library.schema
+-- sqlite3 library.db -init library.schema
+
+CREATE TABLE IF NOT EXISTS book (
+    id            INTEGER PRIMARY KEY AUTOINCREMENT,
+    title         TEXT    NOT NULL,
+    author        TEXT    DEFAULT 'Unknown'
+);
+
+CREATE TABLE IF NOT EXISTS member (
+    id             INTEGER PRIMARY KEY,
+    name           TEXT    NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS borrow (
+    id             INTEGER PRIMARY KEY,
+    member_id      INTEGER,
+    book_id        INTEGER,
+    status         TEXT    DEFAULT 'B',
+    FOREIGN KEY(member_id) REFERENCES member(id),
+    FOREIGN KEY(book_id) REFERENCES book(id)
+)
