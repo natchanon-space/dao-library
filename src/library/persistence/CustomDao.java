@@ -20,7 +20,7 @@ public abstract class CustomDao<T> {
         return dao.queryForId(id);
     }
 
-    public List<T> getAll(int id) throws SQLException {
+    public List<T> getAll() throws SQLException {
         return dao.queryForAll();
     }
 

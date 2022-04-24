@@ -11,6 +11,8 @@ import java.sql.SQLException;
 
 public class DaoFactory {
 
+    public static final String DEFAULT_DB_URL = "jdbc:sqlite:library.db";
+
     public enum DaoType {
         BOOK_DAO,
         BORROW_DAO,
@@ -18,6 +20,10 @@ public class DaoFactory {
     }
 
     private ConnectionSource connectionSource;
+
+    public DaoFactory() throws SQLException {
+        this.connectionSource = new JdbcConnectionSource(DEFAULT_DB_URL);
+    }
 
     public DaoFactory(String databaseURL) throws SQLException {
         this.connectionSource = new JdbcConnectionSource(databaseURL);
