@@ -1,5 +1,6 @@
 package gui.panel;
 
+import com.j256.ormlite.stmt.query.In;
 import library.Book;
 import library.Member;
 import library.persistence.BookDao;
@@ -9,6 +10,8 @@ import library.persistence.MemberDao;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
 public class MemberPanel extends JPanel {
@@ -47,6 +50,25 @@ public class MemberPanel extends JPanel {
         addFormPanel.add(new JLabel("name: "));
         addFormPanel.add(nameField);
         addFormPanel.add(addButton);
+
+        addButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String name = nameField.getText();
+
+                try {
+                    dao.create(new Member(name));
+                    remove(scrollPane);
+                    initTable();
+                    add(scrollPane);
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+
+                nameField.setText("");
+                revalidate();
+            }
+        });
     }
 
     private void initDeleteForm() {
@@ -59,6 +81,26 @@ public class MemberPanel extends JPanel {
         deleteFormPanel.add(new JLabel("id: "));
         deleteFormPanel.add(idField);
         deleteFormPanel.add(deleteButton);
+
+        deleteButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int id = Integer.parseInt(idField.getText());
+
+                try {
+                    Member member = dao.get(id);
+                    dao.delete(member);
+                    remove(scrollPane);
+                    initTable();
+                    add(scrollPane);
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+
+                idField.setText("");
+                revalidate();
+            }
+        });
     }
 
     private void initUpdateForm() {
@@ -74,6 +116,32 @@ public class MemberPanel extends JPanel {
         updateFormPanel.add(new JLabel("name: "));
         updateFormPanel.add(nameField);
         updateFormPanel.add(updateButton);
+
+        updateButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int id = Integer.parseInt(idField.getText());
+                String name = nameField.getText();
+
+                try {
+                    Member member = dao.get(id);
+                    if(!nameField.getText().isBlank()) {
+                        member.setName(name);
+                    }
+                    dao.update(member);
+
+                    remove(scrollPane);
+                    initTable();
+                    add(scrollPane);
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+
+                idField.setText("");
+                nameField.setText("");
+                revalidate();
+            }
+        });
     }
 
     private void initTable() throws SQLException {
