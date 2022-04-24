@@ -1,6 +1,5 @@
 import library.Book;
 import library.persistence.BookDao;
-import library.persistence.CustomDao;
 import library.persistence.DaoFactory;
 
 import java.sql.SQLException;

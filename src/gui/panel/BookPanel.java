@@ -6,6 +6,8 @@ import library.persistence.DaoFactory;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
 public class BookPanel extends JPanel {
@@ -48,6 +50,31 @@ public class BookPanel extends JPanel {
         addFormPanel.add(new JLabel("author: "));
         addFormPanel.add(authorField);
         addFormPanel.add(addButton);
+
+        addButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String title = titleField.getText();
+                String author = authorField.getText();
+
+                if(authorField.getText().isBlank()) {
+                    author = null;
+                }
+
+                try {
+                    dao.create(new Book(title, author));
+                    remove(scrollPane);
+                    initTable();
+                    add(scrollPane);
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+
+                titleField.setText("");
+                authorField.setText("");
+                revalidate();
+            }
+        });
     }
 
     private void initDeleteForm() {
@@ -60,6 +87,26 @@ public class BookPanel extends JPanel {
         deleteFormPanel.add(new JLabel("id: "));
         deleteFormPanel.add(idField);
         deleteFormPanel.add(deleteButton);
+
+        deleteButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int id = Integer.parseInt(idField.getText());
+
+                try {
+                    Book book = dao.get(id);
+                    dao.delete(book);
+                    remove(scrollPane);
+                    initTable();
+                    add(scrollPane);
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+
+                idField.setText("");
+                revalidate();
+            }
+        });
     }
 
     private void initUpdateForm() {
@@ -78,6 +125,37 @@ public class BookPanel extends JPanel {
         updateFormPanel.add(new JLabel("author: "));
         updateFormPanel.add(authorField);
         updateFormPanel.add(updateButton);
+
+        updateButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int id = Integer.parseInt(idField.getText());
+                String title = titleField.getText();
+                String author = authorField.getText();
+
+                try {
+                    Book book = dao.get(id);
+                    if(!titleField.getText().isBlank()) {
+                        book.setTitle(title);
+                    }
+                    if(!authorField.getText().isBlank()) {
+                        book.setAuthor(author);
+                    }
+                    dao.update(book);
+
+                    remove(scrollPane);
+                    initTable();
+                    add(scrollPane);
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
+
+                idField.setText("");
+                titleField.setText("");
+                authorField.setText("");
+                revalidate();
+            }
+        });
     }
 
     private void initTable() throws SQLException {
