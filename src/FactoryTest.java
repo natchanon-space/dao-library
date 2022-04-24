@@ -28,8 +28,7 @@ public class FactoryTest {
 
         List<Borrow> borrows = borrowDao.getFromMemberId(memberDao.get(10));
         for(Borrow borrow: borrows) {
-            borrow.setBook(bookDao.get(borrow.getBook().getId()));
-            borrow.setMember(memberDao.get(borrow.getMember().getId()));
+            borrowDao.eagerRefresh(borrow);
             System.out.println(borrow.getId());
             System.out.println(borrow.getMember().getName());
             System.out.println(borrow.getBook().getTitle());

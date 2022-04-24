@@ -10,8 +10,13 @@ import java.util.List;
 
 public class BorrowDao extends CustomDao<Borrow> {
 
-    public BorrowDao(Dao<Borrow, Integer> dao) {
+    private BookDao bookDao;
+    private MemberDao memberDao;
+
+    public BorrowDao(Dao<Borrow, Integer> dao, BookDao bookDao, MemberDao memberDao) {
         super(dao);
+        this.bookDao = bookDao;
+        this.memberDao = memberDao;
     }
 
     public List<Borrow> getFromMemberId(Member member) throws SQLException {
@@ -28,5 +33,13 @@ public class BorrowDao extends CustomDao<Borrow> {
                 .where()
                 .eq("book_id", book.getId())
                 .query();
+    }
+
+    public void eagerRefresh(Borrow borrow) throws SQLException {
+        Book book = bookDao.get(borrow.getBook().getId());
+        Member member = memberDao.get(borrow.getMember().getId());
+
+        borrow.setBook(book);
+        borrow.setMember(member);
     }
 }

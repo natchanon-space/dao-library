@@ -17,7 +17,7 @@ public class MainFrame extends JFrame {
     public MainFrame() throws HeadlessException, SQLException {
 
         JPanel panel = new JPanel();
-        panel.add(new Label("Select Something"));
+        panel.add(new Label("Welcome to DAO Library"));
         add(panel);
 
         bookPanel = new BookPanel();
@@ -47,16 +47,25 @@ public class MainFrame extends JFrame {
 
     private void initMenu() throws SQLException {
         JMenuBar menuBar = new JMenuBar();
-        JMenu menu = new JMenu("Menu");
-        menuBar.add(menu);
+        JMenu manageMenu = new JMenu("Manage");
+        menuBar.add(manageMenu);
         // book
         JMenuItem book = new JMenuItem("Book");
         book.addActionListener(new MenuAction(bookPanel));
-        menu.add(book);
+        manageMenu.add(book);
         // member
         JMenuItem member = new JMenuItem("Member");
         member.addActionListener(new MenuAction(memberPanel));
-        menu.add(member);
+        manageMenu.add(member);
+
+        JMenu borrowMenu = new JMenu("Borrow");
+        menuBar.add(borrowMenu);
+        // search and check status
+        JMenuItem checkBorrow = new JMenuItem("Status");
+        // TODO: add panel and action event listener
+        // borrow and return service
+        JMenuItem bookBorrow = new JMenuItem("Borrow/Return");
+        // TODO: add panel and action event listener
 
         setJMenuBar(menuBar);
     }
