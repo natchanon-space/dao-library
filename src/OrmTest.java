@@ -6,6 +6,7 @@ import library.Book;
 import library.Borrow;
 import library.Member;
 import library.persistence.BookDao;
+import library.persistence.MemberDao;
 
 import java.sql.SQLException;
 
@@ -16,28 +17,17 @@ public class OrmTest {
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
         ConnectionSource connectionSource = new JdbcConnectionSource(DB_URL);
 
-        Dao<Borrow, Integer> borrowDao = DaoManager.createDao(connectionSource, Borrow.class);
-
-        Borrow borrow1 = borrowDao.queryForId(50);
-
-        Book book = borrow1.getBook();
-        Member member = borrow1.getMember();
-
-        System.out.printf("Book ID: %d\n", book.getId());
-        System.out.printf("Book's Author: %s\n", book.getTitle());
-        System.out.printf("Member ID: %d\n", member.getId());
-        System.out.printf("Member's Name: %s\n", member.getName());
-
         BookDao bookDao = new BookDao(DaoManager.createDao(connectionSource, Book.class));
 
-        Book newBook = new Book("The Brave", "Pun Pun");
-        bookDao.createBook(newBook);
+        Book book = bookDao.get(28);
 
-//        bookDao.deleteBook(new Book(50, "", ""));
-        bookDao.updateBook(new Book(53, "a", "b"));
+        System.out.println(book.getTitle());
+        System.out.println(book.getAuthor());
 
-        for(Book b: bookDao.getAllBook()) {
-            System.out.printf("%d || %s || %s\n", b.getId(), b.getAuthor(), b.getTitle());
-        }
+        MemberDao memberDao = new MemberDao(DaoManager.createDao(connectionSource, Member.class));
+
+        Member member = memberDao.get(27);
+
+        System.out.println(member.getName());
     }
 }
