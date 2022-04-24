@@ -6,7 +6,6 @@ import library.persistence.DaoFactory;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.*;
 import java.sql.SQLException;
 
 public class BookPanel extends JPanel {
@@ -43,7 +42,7 @@ public class BookPanel extends JPanel {
         JTextField authorField = new JTextField(20);
         JButton addButton = new JButton("add");
 
-        addFormPanel.add(new JLabel("[New Book]"));
+        addFormPanel.add(new JLabel("[Create]"));
         addFormPanel.add(new JLabel("title: "));
         addFormPanel.add(titleField);
         addFormPanel.add(new JLabel("author: "));
