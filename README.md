@@ -2,6 +2,8 @@
 
 Library book borrowing software that doesn't care about time.
 
+This library has no limit amount of each book, so it will keep only borrowed/returned status only.
+
 Thanks for the book data from [The Greatest Book](https://thegreatestbooks.org/).
 
 ## Initialize Database

@@ -1,16 +1,13 @@
 package library.persistence;
 
 import com.j256.ormlite.dao.Dao;
-import com.j256.ormlite.dao.DaoManager;
-import com.j256.ormlite.support.ConnectionSource;
-import library.Borrow;
 
 import java.sql.SQLException;
 import java.util.List;
 
 public abstract class CustomDao<T> {
 
-    private Dao<T, Integer> dao;
+    protected Dao<T, Integer> dao;
 
     public CustomDao(Dao<T, Integer> dao) {
         this.dao = dao;

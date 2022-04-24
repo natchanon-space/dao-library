@@ -19,7 +19,7 @@ public class DaoFactory {
         MEMBER_DAO
     }
 
-    private ConnectionSource connectionSource;
+    protected ConnectionSource connectionSource;
 
     public DaoFactory() throws SQLException {
         this.connectionSource = new JdbcConnectionSource(DEFAULT_DB_URL);
