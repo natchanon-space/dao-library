@@ -5,6 +5,7 @@ import com.j256.ormlite.support.ConnectionSource;
 import library.Book;
 import library.Borrow;
 import library.Member;
+import library.persistence.BookDao;
 
 import java.sql.SQLException;
 
@@ -26,5 +27,17 @@ public class OrmTest {
         System.out.printf("Book's Author: %s\n", book.getTitle());
         System.out.printf("Member ID: %d\n", member.getId());
         System.out.printf("Member's Name: %s\n", member.getName());
+
+        BookDao bookDao = new BookDao(DaoManager.createDao(connectionSource, Book.class));
+
+        Book newBook = new Book("The Brave", "Pun Pun");
+        bookDao.createBook(newBook);
+
+//        bookDao.deleteBook(new Book(50, "", ""));
+        bookDao.updateBook(new Book(53, "a", "b"));
+
+        for(Book b: bookDao.getAllBook()) {
+            System.out.printf("%d || %s || %s\n", b.getId(), b.getAuthor(), b.getTitle());
+        }
     }
 }

@@ -26,6 +26,12 @@ public class Borrow {
         // ORMLite needs a no-args constructor
     }
 
+    public Borrow(Member member, Book book) {
+        this.member = member;
+        this.book = book;
+        this.status = "B";
+    }
+
     public Borrow(int id, Member member, Book book, String status) {
         this.id = id;
         this.member = member;

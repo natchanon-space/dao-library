@@ -18,6 +18,10 @@ public class Member {
         // ORMLite needs a no-args constructor
     }
 
+    public Member(String name) {
+        this.name = name;
+    }
+
     public Member(int id, String name) {
         this.id = id;
         this.name = name;
