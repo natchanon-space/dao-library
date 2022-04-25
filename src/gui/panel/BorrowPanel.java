@@ -103,6 +103,7 @@ public class BorrowPanel extends JPanel {
                 try {
                     borrow = dao.get(Integer.parseInt(returnIdField.getText()));
                     borrow.setStatus("R");
+                    dao.update(borrow);
 
                     messageText.setText(String.format("Message: Update status borrow id %d to be returned", borrow.getId()));
                 } catch (Exception ex) {
