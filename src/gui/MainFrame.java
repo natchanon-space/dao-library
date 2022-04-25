@@ -1,6 +1,7 @@
 package gui;
 
 import gui.panel.BookPanel;
+import gui.panel.BorrowPanel;
 import gui.panel.MemberPanel;
 import gui.panel.SearchPanel;
 
@@ -15,6 +16,7 @@ public class MainFrame extends JFrame {
     JPanel bookPanel;
     JPanel memberPanel;
     JPanel searchPanel;
+    JPanel borrowPanel;
 
     public MainFrame() throws HeadlessException, SQLException {
 
@@ -25,13 +27,13 @@ public class MainFrame extends JFrame {
         bookPanel = new BookPanel();
         memberPanel = new MemberPanel();
         searchPanel = new SearchPanel();
+        borrowPanel = new BorrowPanel();
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         initMenu();
 
         pack();
-        setSize(new Dimension(600, 800));
         setLayout(new BorderLayout());
     }
 
@@ -69,7 +71,7 @@ public class MainFrame extends JFrame {
         borrowMenu.add(checkBorrow);
         // borrow and return service
         JMenuItem bookBorrow = new JMenuItem("Borrow/Return");
-        // TODO: add panel and action event listener
+        bookBorrow.addActionListener(new MenuAction(borrowPanel));
         borrowMenu.add(bookBorrow);
 
         setJMenuBar(menuBar);

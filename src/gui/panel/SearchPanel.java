@@ -1,6 +1,5 @@
 package gui.panel;
 
-import library.Book;
 import library.Borrow;
 import library.persistence.BookDao;
 import library.persistence.BorrowDao;
