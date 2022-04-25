@@ -19,7 +19,7 @@ public class DaoFactory {
         MEMBER_DAO
     }
 
-    private ConnectionSource connectionSource;
+    protected ConnectionSource connectionSource;
 
     public DaoFactory() throws SQLException {
         this.connectionSource = new JdbcConnectionSource(DEFAULT_DB_URL);
@@ -38,7 +38,12 @@ public class DaoFactory {
             case BOOK_DAO:
                 return new BookDao(DaoManager.createDao(connectionSource, Book.class));
             case BORROW_DAO:
-                return new BorrowDao(DaoManager.createDao(connectionSource, Borrow.class));
+                BookDao bookDao = new BookDao(DaoManager.createDao(connectionSource, Book.class));
+                MemberDao memberDao = new MemberDao(DaoManager.createDao(connectionSource, Member.class));
+                return new BorrowDao(
+                        DaoManager.createDao(connectionSource, Borrow.class),
+                        bookDao,
+                        memberDao);
             case MEMBER_DAO:
                 return new MemberDao(DaoManager.createDao(connectionSource, Member.class));
         }

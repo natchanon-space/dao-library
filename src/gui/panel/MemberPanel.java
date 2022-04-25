@@ -1,15 +1,11 @@
 package gui.panel;
 
-import com.j256.ormlite.stmt.query.In;
-import library.Book;
 import library.Member;
-import library.persistence.BookDao;
 import library.persistence.DaoFactory;
 import library.persistence.MemberDao;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;

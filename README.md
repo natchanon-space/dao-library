@@ -2,8 +2,13 @@
 
 Library book borrowing software that doesn't care about time.
 
+This library has no limit amount of each book, so it will keep only borrowed/returned status only.
+
 Thanks for the book data from [The Greatest Book](https://thegreatestbooks.org/).
 
+## Requirements
+We need `Java 17`. In my case, I use `openjdk17`
+.
 ## Initialize Database
 For the Window,
 ```
