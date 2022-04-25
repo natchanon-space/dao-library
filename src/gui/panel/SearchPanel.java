@@ -56,9 +56,6 @@ public class SearchPanel extends JPanel {
         submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println(filter.getSelectedIndex());
-                System.out.println(searchField.getText());
-
                 int filterOption = filter.getSelectedIndex();
                 int id = Integer.parseInt(searchField.getText());
 
@@ -99,7 +96,6 @@ public class SearchPanel extends JPanel {
         dtm.setColumnIdentifiers(columnNames);
 
         if (borrowList != null) {
-            System.out.println("uploading");
             for (Borrow b : borrowList) {
                 dtm.addRow(new Object[]{
                         b.getBook().getId(),

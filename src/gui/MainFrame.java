@@ -34,6 +34,7 @@ public class MainFrame extends JFrame {
         initMenu();
 
         pack();
+        setTitle("DAO Library Management");
         setLayout(new BorderLayout());
     }
 
