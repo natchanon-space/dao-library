@@ -1,9 +1,15 @@
 package gui.panel;
 
+import library.Book;
+import library.Borrow;
+import library.Member;
+import library.persistence.BookDao;
 import library.persistence.BorrowDao;
 import library.persistence.DaoFactory;
+import library.persistence.MemberDao;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
@@ -11,6 +17,9 @@ import java.sql.SQLException;
 public class BorrowPanel extends JPanel {
 
     private BorrowDao dao;
+    private BookDao bookDao;
+    private MemberDao memberDao;
+
     private JLabel titleText;
     private JLabel messageText;
 
@@ -19,6 +28,8 @@ public class BorrowPanel extends JPanel {
 
     public BorrowPanel() throws SQLException {
         this.dao = (BorrowDao) new DaoFactory().getDao(DaoFactory.DaoType.BORROW_DAO);
+        this.bookDao = (BookDao) new DaoFactory().getDao(DaoFactory.DaoType.BOOK_DAO);
+        this.memberDao = (MemberDao) new DaoFactory().getDao(DaoFactory.DaoType.MEMBER_DAO);
 
         titleText = new JLabel("Welcome to Borrow/Return Service");
         messageText = new JLabel();
@@ -27,6 +38,7 @@ public class BorrowPanel extends JPanel {
         initReturnForm();
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        setPreferredSize(new Dimension(400, 100));
         add(titleText);
         add(borrowFormPanel);
         add(returnFormPanel);
@@ -50,7 +62,24 @@ public class BorrowPanel extends JPanel {
         borrowButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // TODO: add event listener
+                Member member;
+                Book book;
+                Borrow borrow;
+
+                try {
+                    member = memberDao.get(Integer.parseInt(memberIdField.getText()));
+                    book = bookDao.get(Integer.parseInt(bookIdField.getText()));
+
+                    borrow = new Borrow(member, book);
+                    dao.create(borrow);
+
+                    messageText.setText(String.format("Message: '%s' has borrowed '%s'", member.getName(), book.getTitle()));
+                } catch (Exception ex) {
+                    messageText.setText("Error: Invalid user id or book id");
+                    throw new RuntimeException(ex);
+                }
+
+                revalidate();
             }
         });
     }
@@ -69,7 +98,19 @@ public class BorrowPanel extends JPanel {
         returnButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // TODO: add event listener
+                Borrow borrow;
+
+                try {
+                    borrow = dao.get(Integer.parseInt(returnIdField.getText()));
+                    borrow.setStatus("R");
+
+                    messageText.setText(String.format("Message: Update status borrow id %d to be returned", borrow.getId()));
+                } catch (Exception ex) {
+                    messageText.setText("Error: Invalid borrow id");
+                    throw new RuntimeException(ex);
+                }
+
+                revalidate();
             }
         });
     }

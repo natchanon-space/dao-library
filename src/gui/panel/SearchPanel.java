@@ -21,7 +21,7 @@ public class SearchPanel extends JPanel {
 
     private JTable table;
     private JScrollPane scrollPane;
-    private String[] columnNames = {"Book ID", "Title", "Name", "Status"};
+    private String[] columnNames = {"ID", "Book ID", "Title", "Name", "Status"};
 
     private JPanel formPanel;
 
@@ -98,6 +98,7 @@ public class SearchPanel extends JPanel {
         if (borrowList != null) {
             for (Borrow b : borrowList) {
                 dtm.addRow(new Object[]{
+                        b.getId(),
                         b.getBook().getId(),
                         b.getBook().getTitle(),
                         b.getMember().getName(),
