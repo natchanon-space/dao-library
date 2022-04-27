@@ -25,3 +25,16 @@ sqlite3> .import --skip 1 data/member.csv member
 sqlite3> .import --skip 1 data/borrow.csv borrow
 ```
 
+## Package Diagram
+
+![package diagram](img/package-diagram.drawio.png)
+
+## Class Diagrams
+
+### Library Package
+
+![library class diagram](img/class-diagram.drawio.png)
+
+### GUI Package
+
+![gui class diagram](img/gui-diagram.drawio.png)
