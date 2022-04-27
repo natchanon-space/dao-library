@@ -9,6 +9,9 @@ Thanks for the book data from [The Greatest Book](https://thegreatestbooks.org/)
 ## Requirements
 We need `Java 17`. In my case, I use `openjdk17`
 .
+
+Edit: I have tested on `Java 11` using `corretto-11`, it works just fine.
+
 ## Initialize Database
 For the Window,
 ```
