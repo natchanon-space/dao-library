@@ -109,7 +109,7 @@ Example
     "title": "In Search of Lost Time",
     "author": "Marcel Proust"
   },
-  "status": 'B'
+  "status": "B"
 }
 ```
 
